@@ -1,0 +1,108 @@
+@model PC1_ROJASMARY.Models.Inversion
+@{
+    ViewData["Title"] = "Opere en la Bolsa";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Formulario de Inversión</h2>
+
+    <form asp-controller="Formulario" asp-action="Ejecutar" method="post">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="Nombre">Nombre y Apellido:</label>
+                <input type="text" class="form-control" id="Nombre" asp-for="Nombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="Correo">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="Correo" asp-for="Correo" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="FechaOperacion">Fecha de Operación:</label>
+                <input type="date" class="form-control" id="FechaOperacion" asp-for="FechaOperacion" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="MontoAbonar">Monto a Abonar:</label>
+                <input type="number" class="form-control" id="MontoAbonar" asp-for="MontoAbonar" required>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Instrumentos:</label>
+           
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="DowJones" name="Instrumentos" value="Dow Jones">
+                <label class="form-check-label" for="DowJones">Dow Jones</label>
+            </div>
+             <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="SP500" name="Instrumentos" value="S&P 500">
+                <label class="form-check-label" for="SP500">S&P 500</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="BonosUS" name="Instrumentos" value="Bonos US">
+                <label class="form-check-label" for="BonosUS">Bonos US</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Invertir</button>
+    </form>
+
+    <h2 class="text-center mt-5">Informe de Compra</h2>
+
+    <table class="table table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nombre</td>
+                <td>@Model.Nombre</td>
+            </tr>
+            <tr>
+                <td>Correo Electrónico</td>
+                <td>@Model.Correo</td>
+            </tr>
+            <tr>
+                <td>Fecha de Operación</td>
+                <td>@Model.FechaOperacion.ToString("dd/MM/yyyy")</td>
+            </tr>
+            <tr>
+                <td>Monto a Abonar</td>
+                <td>@Model.MontoAbonar.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Instrumentos</td>
+                <td>
+                    @if (Model.Instrumentos != null && Model.Instrumentos.Any())
+                    {
+                        <ul class="list-unstyled">
+                            @foreach (var instrumento in Model.Instrumentos)
+                            {
+                                <li>@instrumento</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>No seleccionó ningún instrumento</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Comisión</td>
+                <td>@Model.Comision.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>IGV</td>
+                <td>@Model.IGV.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Total a Pagar</td>
+                <td>@Model.TotalPagar.ToString("C")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
